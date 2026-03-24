@@ -1,0 +1,6 @@
+[submodule "tools/RirePE"]
+	path = tools/RirePE
+	url = https://github.com/Riremito/RirePE
+[submodule "tools/tools"]
+	path = tools/tools
+	url = https://github.com/Riremito/tools

@@ -1,0 +1,2 @@
+@echo off
+powershell -NoProfile -Command "$conn = Get-NetTCPConnection -State Listen -LocalPort 3308 -ErrorAction SilentlyContinue | Select-Object -First 1; if (-not $conn) { Write-Host 'No MySQL process is listening on port 3308.'; exit 0 }; Stop-Process -Id $conn.OwningProcess -Force; Start-Sleep -Seconds 2; if (Get-NetTCPConnection -State Listen -LocalPort 3308 -ErrorAction SilentlyContinue) { Write-Host 'Port 3308 is still in use.'; exit 1 } else { Write-Host 'Stopped Wamp MySQL on port 3308.' }"

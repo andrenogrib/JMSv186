@@ -122,7 +122,24 @@ public class TacosClient extends BaseClient {
     }
 
     public int getChannelId() {
-        return ((TacosChannel) this.server).getChannel(); // from 1.
+        if (this.server == null) {
+            return this.selected_channel;
+        }
+
+        switch (this.server.getType()) {
+            case GAME_SERVER: {
+                return ((TacosChannel) this.server).getChannel(); // from 1.
+            }
+            case CASHSHOP_SERVER:
+            case ITC_SERVER: {
+                // Preserve the last selected game channel while temporarily attached to non-channel servers.
+                return this.selected_channel;
+            }
+            case LOGIN_SERVER:
+            default: {
+                return this.selected_channel;
+            }
+        }
     }
 
     public void sendSelectCharacterResult(TacosServer game_server, int character_id) {

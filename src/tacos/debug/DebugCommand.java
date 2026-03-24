@@ -355,6 +355,17 @@ public class DebugCommand {
                 chr.DebugMsg("Ac : " + chr.getStance());
                 return true;
             }
+            case "/mapid":
+            case "/whereami": {
+                MapleMap map = chr.getMap();
+                if (map == null) {
+                    chr.DebugMsg("[Map] map is null.");
+                    return false;
+                }
+                chr.DebugMsg("[Map] ID = " + map.getId());
+                chr.DebugMsg("[Map] Name = " + map.getStreetName() + " / " + map.getMapName());
+                return true;
+            }
             case "/hm": {
                 List<Integer> ids = new ArrayList<>();
                 IMapleData md_item_sub_type = ItemWz.get().getItemImg(503);

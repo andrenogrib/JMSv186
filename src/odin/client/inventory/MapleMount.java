@@ -59,6 +59,7 @@ public class MapleMount {
         ps.setInt(2, exp);
         ps.setByte(3, (byte) fatigue);
         ps.setInt(4, charid);
+        ps.executeUpdate();
         ps.close();
     }
 

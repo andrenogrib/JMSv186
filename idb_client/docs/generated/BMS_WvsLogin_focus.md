@@ -1,0 +1,74 @@
+# WvsLogin Packet Surface
+
+- IDB: `C:\Users\andre\Dropbox\games\ms_server\bms_v024\JMSv186\idb_client\idb\BMS_srv\BMS_WvsLogin.idb`
+- Patterns: `OnPacket, CLogin, CheckPassword, World, SelectChar, DeleteChar`
+- Match count: `66`
+
+| Address | Function |
+| --- | --- |
+| `0x004091C8` | `?OnPacket@CCenter@@IAEXAAVCInPacket@@@Z` |
+| `0x004094D1` | `?OnSetWorldInfo@CCenter@@IAEXAAVCInPacket@@@Z` |
+| `0x0040961F` | `?OnWorldSpecificBonusRateSet@CCenter@@IAEXAAVCInPacket@@@Z` |
+| `0x0040D710` | `?SendWorldInformation@CClientSocket@@IAEXXZ` |
+| `0x0040D9B3` | `?GetWorldState@CCenter@@QBEJXZ` |
+| `0x0040D9E5` | `?GetWorldEventDesc@CCenter@@QBE?AV?$ZXString@D@@XZ` |
+| `0x0040DF01` | `?OnCheckPassword@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040E551` | `?OnWorldInfoRequest@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040E572` | `?OnSelectWorld@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040E6F3` | `?OnSelectCharacter@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040E950` | `?OnSelectCharacterByVAC@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040F0B8` | `?OnDeleteCharacter@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040F576` | `?OnCenterSelectCharacterResult@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040F767` | `?OnCenterSelectCharacterByVACResult@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040FC83` | `?OnCenterDeleteCharacterResult@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x0040FD0A` | `?SetCenterSelectCharacterResultPacket@CClientSocket@@QAEXAAVCInPacket@@@Z` |
+| `0x00410368` | `?OnLogoutWorld@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x004109B2` | `?OnWorldRequest@CClientSocket@@IAEXAAVCInPacket@@@Z` |
+| `0x00411BE6` | `?CheckPassword@IWvsUnifiedDB@@QAEJPAD0JJJPAKPAEPAJ22PAPAG2323PAU_FILETIME@@3525@Z` |
+| `0x0041CF7A` | `??0CLoginAcceptor@@QAE@XZ` |
+| `0x0041D063` | `??_ECLoginAcceptor@@UAEPAXI@Z` |
+| `0x0041D083` | `??1CLoginAcceptor@@UAE@XZ` |
+| `0x0041D117` | `?Begin@CLoginAcceptor@@QAEHABVZInetAddr@@@Z` |
+| `0x0041D158` | `?Terminate@CLoginAcceptor@@QAEXXZ` |
+| `0x0041D1EF` | `?OnAccept@CLoginAcceptor@@MAEXKPAVCClientSocket@@PBUsockaddr_in@@@Z` |
+| `0x0041D77B` | `?GetSocket@CLoginAcceptor@@QAE?AV?$ZRef@VCClientSocket@@@@K@Z` |
+| `0x0041D805` | `?RemoveSocket@CLoginAcceptor@@QAEXPAVCClientSocket@@@Z` |
+| `0x0041D92F` | `??1?$TSingleton@VCLoginAcceptor@@@@QAE@XZ` |
+| `0x0041EB6D` | `??0CLoginApp@@QAE@XZ` |
+| `0x0041EB99` | `??_GCLoginApp@@UAEPAXI@Z` |
+| `0x0041EBB9` | `??1CLoginApp@@UAE@XZ` |
+| `0x0041EC35` | `?SetUp@CLoginApp@@QAEHXZ` |
+| `0x0041ED60` | `?CleanUp@CLoginApp@@QAEXXZ` |
+| `0x0041EDF5` | `?TryConnectCenter@CLoginApp@@QAEXXZ` |
+| `0x0041EE1D` | `?CloseCenter@CLoginApp@@QAEXJ@Z` |
+| `0x0041EE31` | `?InitializeDB@CLoginApp@@IAEXXZ` |
+| `0x0041EF67` | `?CreateMainDialog@CLoginApp@@IAEXXZ` |
+| `0x0041EFBA` | `?InitializeCenter@CLoginApp@@IAEXXZ` |
+| `0x0041F2C5` | `?LoadConfiguration@CLoginApp@@IAEXXZ` |
+| `0x0041F2CF` | `?CreateAcceptor@CLoginApp@@IAEXXZ` |
+| `0x0041F457` | `?CreateAdminAcceptor@CLoginApp@@IAEXXZ` |
+| `0x0041F538` | `?CreateTimerThread@CLoginApp@@IAEXXZ` |
+| `0x0041F5C4` | `?LoadNewCharInfo@CLoginApp@@IAEXXZ` |
+| `0x0041FD97` | `?CheckCharName@CLoginApp@@QAEHAAV?$ZXString@D@@H@Z` |
+| `0x0041FF61` | `?CheckCharEquip@CLoginApp@@QAEHJJJ@Z` |
+| `0x00420173` | `??1?$ZArray@UNEWEQUIP@CLoginApp@@@@QAE@XZ` |
+| `0x00420178` | `?GetCount@?$ZArray@UNEWEQUIP@CLoginApp@@@@QBEIXZ` |
+| `0x004201C5` | `?Create@?$TSelfTestThread@VCLoginAcceptor@@@@SAXV?$ZXString@D@@@Z` |
+| `0x00420281` | `?Destroy@?$TSelfTestThread@VCLoginAcceptor@@@@SAXXZ` |
+| `0x004202CC` | `??0?$TSelfTestThread@VCLoginAcceptor@@@@AAE@XZ` |
+| `0x004202FD` | `?Run@?$TSelfTestThread@VCLoginAcceptor@@@@EAEHPAXPAUZThreadResult@ZThread@@@Z` |
+| `0x004206EA` | `??_E?$TSelfTestThread@VCLoginAcceptor@@@@EAEPAXI@Z` |
+| `0x0042070A` | `??1?$TSelfTestThread@VCLoginAcceptor@@@@EAE@XZ` |
+| `0x0042075B` | `?Terminate@?$TSelfTestThread@VCLoginAcceptor@@@@AAEXXZ` |
+| `0x00420777` | `??1?$TSingleton@V?$TSelfTestThread@VCLoginAcceptor@@@@@@QAE@XZ` |
+| `0x00420976` | `?RemoveAll@?$ZArray@UNEWEQUIP@CLoginApp@@@@QAEXXZ` |
+| `0x00420998` | `?_Alloc@?$ZArray@UNEWEQUIP@CLoginApp@@@@AAEPAUNEWEQUIP@CLoginApp@@IABVZAllocHelper@@@Z` |
+| `0x004209D6` | `?_Realloc@?$ZArray@UNEWEQUIP@CLoginApp@@@@AAEPAUNEWEQUIP@CLoginApp@@IHABVZAllocHelper@@@Z` |
+| `0x00420B34` | `??A?$ZArray@UNEWEQUIP@CLoginApp@@@@QAEAAUNEWEQUIP@CLoginApp@@I@Z` |
+| `0x00420EC3` | `?GetCapacity@?$ZArray@UNEWEQUIP@CLoginApp@@@@QBEIXZ` |
+| `0x00421333` | `??0CLoginDialog@@QAE@XZ` |
+| `0x00421345` | `??_GCLoginDialog@@UAEPAXI@Z` |
+| `0x00421365` | `??1CLoginDialog@@UAE@XZ` |
+| `0x00421370` | `?UpdateConnection@CLoginDialog@@MAEXXZ` |
+| `0x004213D3` | `?OnTimer@CLoginDialog@@MAEXXZ` |
+| `0x0042141F` | `?OnWndMsg@CLoginDialog@@MAEHPAUHWND__@@IIJ@Z` |

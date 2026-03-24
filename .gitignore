@@ -17,3 +17,12 @@
 /wz_xml/
 /dump/
 /log/
+*.log
+*.err
+/backup/*.sql
+/idb_client/idb/
+/idb_client/*.exe
+/tools/idb/__pycache__/
+/tools/GH_Injector/
+/tools/ExtremeInjector/
+/tools/RirePE_runtime/

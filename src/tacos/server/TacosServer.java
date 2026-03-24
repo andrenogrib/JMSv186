@@ -83,13 +83,15 @@ public class TacosServer {
             return false;
         }
 
-        DebugLogger.InfoLog("bind = " + this.server_inet_socket_address.getHostName() + ":" + this.server_inet_socket_address.getPort() + " (" + this.server_name + ")");
+        // Use the configured bind address directly so reverse-DNS/hosts entries
+        // do not rewrite localhost into an unrelated hostname in the logs.
+        DebugLogger.InfoLog("bind = " + this.server_ip + ":" + this.server_inet_socket_address.getPort() + " (" + this.server_name + ")");
         this.server_status = true;
         return true;
     }
 
     public void shutdown() {
-        DebugLogger.InfoLog("unbind = " + this.server_inet_socket_address.getHostName() + ":" + this.server_inet_socket_address.getPort() + " (" + this.server_name + ")");
+        DebugLogger.InfoLog("unbind = " + this.server_ip + ":" + this.server_inet_socket_address.getPort() + " (" + this.server_name + ")");
         if (this.server_status) {
             getIoAcceptor().unbind(this.server_inet_socket_address);
         }
