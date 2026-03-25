@@ -1,0 +1,236 @@
+Session = 20260325_112127
+Version = BMS 24.0
+XML Path = wz_xml\xml_BMS_v24\
+script Path = scripts\scripts_BMS\
+DatabaseName Path = BMS_v24
+Console Log = C:\Users\andre\Dropbox\games\ms_server\bms_v024\JMSv186\logs\Server_BMS_24_0_20260325_112127.log
+java version "25.0.2" 2026-01-20 LTS
+Java(TM) SE Runtime Environment (build 25.0.2+10-LTS-69)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.2+10-LTS-69, mixed mode, sharing)
+[2026/03/25 11:21:27][3][SETUP] VERSION
+[2026/03/25 11:21:27][3][INFO] BMS v24.0
+[2026/03/25 11:21:27][3][SETUP] DEV_LOG
+[2026/03/25 11:21:27][3][SETUP] FLAG_CONTENT
+[2026/03/25 11:21:27][3][SETUP] FLAG_CLIENT_EDIT
+[2026/03/25 11:21:27][3][SETUP] EXP_TABLE
+[2026/03/25 11:21:27][3][SETUP] PACKET_OPS
+[2026/03/25 11:21:27][3][SETUP] PROPERTIES
+[2026/03/25 11:21:27][3][SETUP] CODEPAGE
+[2026/03/25 11:21:28][3][INFO] bind = 127.0.0.1:8484 (Login)
+[2026/03/25 11:21:28][3][INFO] bind = 127.0.0.1:8100 (Kaede-1)
+[2026/03/25 11:21:28][3][INFO] bind = 127.0.0.1:8101 (Kaede-2)
+[2026/03/25 11:21:28][3][INFO] bind = 127.0.0.1:8596 (CashShop)
+[2026/03/25 11:21:28][3][INFO] bind = 127.0.0.1:8597 (ITC)
+[2026/03/25 11:21:28][3][SETUP] DONE!
+[2026/03/25 11:21:47][51][ClientPacket] UNKNOWN @0016
+[2026/03/25 11:21:51][51][INFO] [LOGIN MAPLEID] "123123"
+[2026/03/25 11:21:51][51][ClientPacket] UNKNOWN @0004
+[2026/03/25 11:21:53][51][DEBUG] setSelectedWorld : 0
+[2026/03/25 11:21:53][51][DEBUG] setSelectedChannel : 0
+[2026/03/25 11:21:53][51][WZ] setWzRoot : Character.wz
+[2026/03/25 11:21:53][51][WZ] setWzRoot : Character.wz/Face
+[2026/03/25 11:21:54][51][WZ] setWzRoot : Character.wz/Hair
+[2026/03/25 11:21:54][51][WZ] setWzRoot : Skill.wz
+[2026/03/25 11:21:56][51][DEBUG] findMigratingPlayer : NG.
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Map.wz
+[2026/03/25 11:21:56][51][WZ] getData : Map.wz/Map/Map1/100000000.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : String.wz
+[2026/03/25 11:21:56][51][WZ] getData : String.wz/Npc.img
+[2026/03/25 11:21:56][51][WZ] getData : String.wz/Map.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Item.wz/Cash/
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0501.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0502.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0503.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0504.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0505.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0506.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0507.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0508.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0509.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0510.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0511.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0512.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0513.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0514.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0515.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0516.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0517.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0518.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0519.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0520.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0521.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0522.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0523.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0524.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0525.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0528.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0529.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0530.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0531.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0532.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0533.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0536.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0537.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0538.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0539.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0540.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0542.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0543.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0545.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0546.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0547.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0551.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0552.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0553.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0557.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0561.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Cash//0599.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Item.wz/Consume/
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0200.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0201.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0202.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0203.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0204.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0205.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0206.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0207.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0210.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0212.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0216.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0219.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0221.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0224.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0226.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0227.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0228.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0229.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0231.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0232.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0233.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0234.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0236.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0238.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Consume//0243.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Item.wz/Etc/
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0400.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0401.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0402.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0403.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0405.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0408.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0413.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0414.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0416.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0417.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0421.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0422.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0425.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0426.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Etc//0430.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Item.wz/Install/
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Install//0301.img
+[2026/03/25 11:21:56][51][WZ] getData : Item.wz/Install//0399.img
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Character.wz/
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Item.wz/Pet/
+[2026/03/25 11:21:56][51][DEBUG] LoadItemXMLs: 461 (ms)
+[2026/03/25 11:21:56][51][WZ] setWzRoot : Skill.wz
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/000.img
+[2026/03/25 11:21:56][51][WZ] getData : String.wz/Skill.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/100.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/110.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/111.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/112.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/120.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/121.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/122.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/130.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/131.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/132.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/200.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/210.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/211.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/212.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/220.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/221.img
+[2026/03/25 11:21:56][51][WZ] getData : Skill.wz/222.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/230.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/231.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/232.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/300.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/310.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/311.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/312.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/320.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/321.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/322.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/400.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/410.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/411.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/412.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/420.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/421.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/422.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/500.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/510.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/511.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/512.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/520.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/521.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/522.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/900.img
+[2026/03/25 11:21:57][51][WZ] getData : Skill.wz/910.img
+[2026/03/25 11:21:57][51][WZ] setWzRoot : Character.wz
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Glove/01082149.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Shoes/01072238.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Cape/01102040.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Weapon/01472055.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Cap/01002511.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Accessory/01122000.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Accessory/01132004.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Longcoat/01050127.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Accessory/01032062.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Ring/01112400.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Accessory/01022047.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/Accessory/01012056.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/TamingMob/01912000.img
+[2026/03/25 11:21:57][51][WZ] getData : Character.wz/TamingMob/01902000.img
+[2026/03/25 11:21:57][51][DEBUG] LazyDB load : RETURN_MAP_FREEMARKET = 102000000, ""
+[2026/03/25 11:21:57][51][DEBUG] LazyDB load : RETURN_MAP_ARDENTMILL = 102000000, ""
+[2026/03/25 11:21:57][51][ClientPacket] CP_SelectCharacter @0006
+[2026/03/25 11:21:58][51][ClientPacket] UNKNOWN @00C4
+[2026/03/25 11:22:08][51][ClientPacket] UNKNOWN @0056
+[2026/03/25 11:22:08][51][ClientPacket] UNKNOWN @0056
+[2026/03/25 11:22:18][51][ClientPacket] UNKNOWN @0056
+[2026/03/25 11:22:18][51][ClientPacket] UNKNOWN @0056
+[2026/03/25 11:22:19][51][WZ] setWzRoot : Item.wz
+[2026/03/25 11:22:19][51][WZ] getData : Item.wz/Consume/0207.img
+[2026/03/25 11:22:28][51][ClientPacket] UNKNOWN @0056
+[2026/03/25 11:22:37][51][SCRIPT] getScript : npc/9010021.js
+[2026/03/25 11:22:38][51][ClientPacket] UNKNOWN @00C4
+[2026/03/25 11:22:38][51][NETWORK] [Server_Kaede-1][/127.0.0.1:54485] sessionClosed.
+[2026/03/25 11:22:38][51][ERROR] [LastSP][Kaede-1][sessionClosed] begin
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0109 00 00 00 00 00 00 00 00 00 00 00 04 0A 00 00 00 04 0C 00 00 00 04 0D 00 00 00 04 12 00 00 00 04 16 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 08 00 00 00 04 05 00 00 00 04 00 00 00 00 04 04 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 01 00 00 00 00 00 00 00 00 04 13 00 00 00 04 0E 00 00 00 04 0F 00 00 00 00 00 00 00 00 01 AF E1 3E 00 00 00 00 00 00 04 02 00 00 00 00 00 00 00 00 00 00 00 00 00 04 11 00 00 00 04 0B 00 00 00 00 00 00 00 00 04 03 00 00 00 04 14 00 00 00 00 00 00 00 00 04 10 00 00 00 04 15 00 00 00 01 9D BA 3E 00 04 09 00 00 00 05 32 00 00 00 05 33 00 00 00 04 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 04 07 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 05 35 00 00 00 05 36 00 00 00 00 00 00 00 00 06 64 00 00 00 06 65 00 00 00 06 66 00 00 00 06 67 00 00 00 06 68 00 00 00 06 69 00 00 00 06 6A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 9A BA 3E 00 00 00 00 00 00 01 9E BA 3E 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 01 8C 93 3E 00 00 00 00 00 00 00 00 00 00 00 01 8B 93 3E 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 04 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 A1 86 01 00 20 71 0F 00 84 01 0E 01 01 97 00 52 01 B6 01 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 A2 86 01 00 B4 69 0F 00 26 06 4D 01 01 7C 00 F4 05 58 06 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 AA 86 01 00 94 88 8C 00 7B 03 0D 01 01 92 00 49 03 AD 03 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 AD 86 01 00 92 88 8C 00 68 04 E2 FF 01 EA 00 36 04 9A 04 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 AF 86 01 00 98 88 8C 00 B9 03 5A 00 01 EF 00 87 03 EB 03 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 B0 86 01 00 53 54 89 00 6B 00 1C 00 01 23 01 48 00 9D 00 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C5 B1 86 01 00 69 65 8C 00 6F 04 83 00 01 F3 00 3D 04 A1 04 01
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 06 14 00 5B 4D 61 70 5D 20 49 44 20 3D 20 31 30 30 30 30 30 30 30 30 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 06 2A 00 5B 4D 61 70 5D 20 4E 61 6D 65 20 3D 20 45 73 74 72 61 64 61 20 64 65 20 56 69 63 74 6F 72 69 61 20 2F 20 48 65 6E 65 73 79 73 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @001B 01 00 10 00 00 C7 10
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @001B 00 00 10 00 00 C7 10
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 06 05 00 65 72 72 6F 72 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00C6 A2 86 01 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 06 05 00 65 72 72 6F 72 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @001B 01 00 10 00 00 A9 10
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @001B 00 00 10 00 00 A9 10
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @0044 06 17 00 53 63 72 69 70 74 20 3A 20 6E 70 63 2F 39 30 31 30 30 32 31 2E 6A 73 00 00 00 00
+[2026/03/25 11:22:38][51][ERROR] [LastSP] @00EF 04 23 71 0F 00 04 A4 00 23 72 83 81 83 6A 83 85 81 5B 23 6B 0D 0A 23 4C 30 23 23 62 83 54 81 5B 83 6F 81 5B 8F EE 95 F1 0D 0A 23 4C 31 23 23 62 83 41 83 62 83 76 83 66 81 5B 83 67 8F EE 95 F1 0D 0A 23 4C 32 23 23 62 83 52 83 7D 83 93 83 68 88 EA 97 97 0D 0A 23 4C 33 23 23 62 95 73 8B EF 8D 87 0D 0A 23 4C 34 23 23 62 83 81 83 82 0D 0A 23 4C 35 23 23 62 8E E1 8A B1 92 70 82 B8 82 A9 82 B5 82 AD 82 C4 8C BE 82 A6 82 C8 82 A2 83 4D 83 8B 83 68 96 BC 82 CC 97 52 97 88 0D 0A 23 4C 36 23 23 62 83 65 83 58 83 67 0D 0A
+[2026/03/25 11:22:38][51][ERROR] [LastSP][Kaede-1][sessionClosed] end
+[2026/03/25 11:22:38][51][DEBUG] setManual
+[2026/03/25 11:22:38][51][DEBUG] commit
+[2026/03/25 11:22:38][51][DEBUG] setAuto
+[2026/03/25 11:22:38][51][DEBUG] findMigratingPlayer : NG.

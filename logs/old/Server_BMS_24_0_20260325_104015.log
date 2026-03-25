@@ -1,0 +1,29 @@
+Session = 20260325_104015
+Version = BMS 24.0
+XML Path = wz_xml\xml_BMS_v24\
+script Path = scripts\scripts_BMS\
+DatabaseName Path = BMS_v24
+Console Log = C:\Users\andre\Dropbox\games\ms_server\bms_v024\JMSv186\logs\Server_BMS_24_0_20260325_104015.log
+java version "25.0.2" 2026-01-20 LTS
+Java(TM) SE Runtime Environment (build 25.0.2+10-LTS-69)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0.2+10-LTS-69, mixed mode, sharing)
+[2026/03/25 10:40:16][3][SETUP] VERSION
+[2026/03/25 10:40:16][3][INFO] BMS v24.0
+[2026/03/25 10:40:16][3][SETUP] DEV_LOG
+[2026/03/25 10:40:16][3][SETUP] FLAG_CONTENT
+[2026/03/25 10:40:16][3][SETUP] FLAG_CLIENT_EDIT
+[2026/03/25 10:40:16][3][SETUP] EXP_TABLE
+[2026/03/25 10:40:16][3][SETUP] PACKET_OPS
+[2026/03/25 10:40:16][3][SETUP] PROPERTIES
+[2026/03/25 10:40:16][3][SETUP] CODEPAGE
+[2026/03/25 10:40:16][3][ERROR] bind = 127.0.0.1:8484 (Login)
+[2026/03/25 10:40:16][3][ERROR] java.net.BindException: Address already in use: bind
+[2026/03/25 10:40:16][3][ERROR] bind = 127.0.0.1:8100 (Kaede-1)
+[2026/03/25 10:40:16][3][ERROR] java.net.BindException: Address already in use: bind
+[2026/03/25 10:40:16][3][ERROR] bind = 127.0.0.1:8101 (Kaede-2)
+[2026/03/25 10:40:16][3][ERROR] java.net.BindException: Address already in use: bind
+[2026/03/25 10:40:16][3][ERROR] bind = 127.0.0.1:8596 (CashShop)
+[2026/03/25 10:40:16][3][ERROR] java.net.BindException: Address already in use: bind
+[2026/03/25 10:40:16][3][ERROR] bind = 127.0.0.1:8597 (ITC)
+[2026/03/25 10:40:16][3][ERROR] java.net.BindException: Address already in use: bind
+[2026/03/25 10:40:16][3][SETUP] DONE!

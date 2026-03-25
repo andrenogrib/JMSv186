@@ -17,8 +17,8 @@
 /wz_xml/
 /dump/
 /log/
-/logs/
 /backup/
 /tools/
 /tmp/
-/idb_client/
+idb_client/idb/IDB.zip
+idb_client/idb/BMS_v24.0_U_DEVM.idb
