@@ -1,0 +1,21 @@
+﻿ M .gitignore
+ M docs/issues/bms_v24_combat_drop_followup.md
+ M docs/tools/README.md
+ M packet_trace_live.bat
+ M run_any.bat
+ M src/odin/client/MapleCharacter.java
+ M src/odin/client/MonsterBook.java
+ M src/odin/handling/channel/handler/BeanGame.java
+ M src/odin/handling/channel/handler/PlayerHandler.java
+ M src/odin/server/MapleStatEffect.java
+ M src/odin/server/Timer.java
+ M src/odin/server/maps/MapleMap.java
+ M src/odin/tools/FileoutputUtil.java
+ M src/tacos/config/ServerConfig.java
+ M src/tacos/debug/DebugLogger.java
+ M src/tacos/server/map/MonsterDrop.java
+ M src/tacos/server/map/TacosMap.java
+ M src/tacos/unofficial/CustomMonsterBookDrop.java
+?? docs/old/
+?? kill_server.bat
+?? tmp/
