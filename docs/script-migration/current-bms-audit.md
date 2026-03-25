@@ -94,6 +94,12 @@ During the live mob-combat debugging session, three notable issues were identifi
 - ranged attacks resolving before the projectile visually lands
 - suspiciously generous drop behavior
 
+Current state after the first server-side pass:
+
+- EXP / meso / item pickup popup is now working again
+- ranged timing is improved but still not fully aligned
+- drop formula was reduced on the BMS server side but still needs ingame verification
+
 Those belong to packet/combat/drop triage in the current BMS codebase, not to simple NPC/quest replacement work.
 
 See `core-systems-triage.md` for the final split between safe script migration work and surgical core debugging.

@@ -12,6 +12,9 @@ set WZ_XML_PATH=wz_xml\xml_%MS_REGION_NAME%_v%MS_VERSION%\
 set SCRIPT_PATH=scripts\scripts_%MS_REGION_NAME%\
 set "RUN_CP=.;dist/*"
 @title Kaede Server %MS_REGION_NAME%_v%MS_VERSION%.%MS_SUBVERSION%
+if /I "%MS_REGION_NAME%"=="BMS" if "%MS_VERSION%"=="24" if "%MS_SUBVERSION%"=="0" if exist "%~dp0packet_trace_live.bat" (
+    start "BMS Packet Trace" /D "%~dp0" cmd /c packet_trace_live.bat
+)
 echo Version = %MS_REGION_NAME% %MS_VERSION%.%MS_SUBVERSION%
 echo XML Path = %WZ_XML_PATH%
 echo script Path = %SCRIPT_PATH%

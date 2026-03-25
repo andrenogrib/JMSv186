@@ -43,6 +43,10 @@ import tacos.packet.ServerPacketHeader;
  */
 public class ResCMobPool {
 
+    private static boolean useLegacyBmsMobLayout() {
+        return Region.IsBMS();
+    }
+
     // moveMonster
     public static MaplePacket moveMonster(boolean bNextAttackPossible, int bLeft, int mob_skill, int oid, ParseCMovePath data) {
         ServerPacket sp = new ServerPacket(ServerPacketHeader.LP_MobMove);
@@ -227,7 +231,7 @@ public class ResCMobPool {
         // CMob::SetTemporaryStat
         if (Version.LessOrEqual(Region.KMS, 1)) {
 
-        } else if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 164)) { // TODO
+        } else if (useLegacyBmsMobLayout() || Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 164)) {
             sp.Encode4(0); // 後でなおす
         } else {
             sp.EncodeBuffer(Structure.MonsterStatus(life));
@@ -255,10 +259,13 @@ public class ResCMobPool {
         }
 
         sp.Encode1(life.getCarnivalTeam()); // m_nTeamForMCarnival
-        if (ServerConfig.JMS146orLater()) {
+        if (useLegacyBmsMobLayout()) {
+            // The BMS v24 client still decodes one trailing dword after team in LP_MobEnterField.
+            sp.Encode4(0);
+        } else if (ServerConfig.JMS146orLater()) {
             sp.Encode4(0); // nEffectItemID
         }
-        if (ServerConfig.JMS165orLater()) {
+        if (!useLegacyBmsMobLayout() && ServerConfig.JMS165orLater()) {
             sp.Encode4(0); // m_nPhase
         }
         return sp.get();
@@ -310,7 +317,7 @@ public class ResCMobPool {
 
         if (Version.LessOrEqual(Region.KMS, 1)) {
 
-        } else if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 164)) { // TODO
+        } else if (useLegacyBmsMobLayout() || Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 164)) {
             sp.Encode4(0); // 後でなおす
         } else {
             sp.EncodeBuffer(Structure.MonsterStatus(life));
@@ -335,7 +342,10 @@ public class ResCMobPool {
         }
 
         sp.Encode1(life.getCarnivalTeam());
-        if (ServerConfig.JMS146orLater()) {
+        if (useLegacyBmsMobLayout()) {
+            // The BMS v24 client still decodes one trailing dword after team in LP_MobChangeController.
+            sp.Encode4(0);
+        } else if (ServerConfig.JMS146orLater()) {
             sp.Encode4(0);
             sp.Encode4(0);
         }

@@ -2,10 +2,15 @@
 
 These scripts help extract reusable information from the local IDB set under `idb_client/idb`.
 
+Generated output now lives under:
+
+- `docs/idb/`
+- `docs/idb/generated/`
+
 ## Scripts
 
 - `inventory_idbs.py`
-  - creates `idb_client/docs/idb_inventory.md`
+  - creates `docs/idb/idb_inventory.md`
 - `extract_names.py`
   - extracts useful named functions and symbols from an IDB
 - `extract_dispatch.py`
@@ -46,4 +51,4 @@ python tools\idb\extract_wvsgame_user_opcodes.py
 
 - The current default target is the main client IDB: `BMS_v24.0_U_DEVM.idb`
 - For unknown packets sent by the client, `BMS_srv/BMS_WvsGame.idb` is often the highest-value server-side IDB
-- The scripts are intentionally conservative: they dump named evidence and disassembly first, then we curate conclusions in Markdown
+- The scripts are intentionally conservative: they dump named evidence and disassembly first, then we curate conclusions in Markdown under `docs/`

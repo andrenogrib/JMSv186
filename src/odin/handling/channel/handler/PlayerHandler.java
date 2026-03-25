@@ -23,6 +23,8 @@ package odin.handling.channel.handler;
 import java.awt.Point;
 
 import odin.client.inventory.IItem;
+import odin.client.inventory.MapleInventory;
+import odin.client.inventory.MapleWeaponType;
 import odin.client.ISkill;
 import odin.client.SkillFactory;
 import odin.constants.GameConstants;
@@ -47,6 +49,7 @@ import odin.server.MapleInventoryManipulator;
 import odin.server.MapleItemInformationProvider;
 import odin.server.MapleStatEffect;
 import odin.server.Randomizer;
+import odin.server.Timer.MapTimer;
 import odin.server.life.MapleMonster;
 import odin.server.life.MobAttackInfo;
 import odin.server.life.MobSkill;
@@ -614,11 +617,18 @@ public class PlayerHandler {
         }
         int projectile = 0, visProjectile = 0;
         if (!GameConstants.is_mercedes(attack.skill / 10000) && attack.nShootRange0a != 0 && chr.getBuffedValue(MapleBuffStat.SOULARROW) == null && attack.skill != 4111004) {
-            if (chr.getInventory(MapleInventoryType.USE).getItem(attack.ProperBulletPosition) == null) {
+            IItem projectileItem = chr.getInventory(MapleInventoryType.USE).getItem(attack.ProperBulletPosition);
+            if (projectileItem == null) {
+                projectileItem = resolveProjectileForEquippedWeapon(chr);
+                if (projectileItem != null) {
+                    attack.ProperBulletPosition = projectileItem.getPosition();
+                }
+            }
+            if (projectileItem == null) {
                 DebugLogger.ErrorLog("rangedAttack : 3");
                 return;
             }
-            projectile = chr.getInventory(MapleInventoryType.USE).getItem(attack.ProperBulletPosition).getItemId();
+            projectile = projectileItem.getItemId();
 
             if (attack.pnCashItemPos > 0) {
                 if (chr.getInventory(MapleInventoryType.CASH).getItem(attack.pnCashItemPos) == null) {
@@ -629,6 +639,7 @@ public class PlayerHandler {
             } else {
                 visProjectile = projectile;
             }
+            attack.nBulletItemID = visProjectile;
             // Handle bulletcount
             if (chr.getBuffedValue(MapleBuffStat.SPIRIT_CLAW) == null) {
                 int bulletConsume = bulletCount;
@@ -691,7 +702,28 @@ public class PlayerHandler {
         }
         chr.checkFollow();
         chr.getMap().broadcastMessageTo(chr, ResCUserRemote.UserAttack(attack), chr.getPosition());
-        DamageParse.applyAttack(attack, skill, chr, bulletCount, basedamage, effect, ShadowPartner != null ? AttackType.RANGED_WITH_SHADOWPARTNER : AttackType.RANGED);
+        final AttackInfo attackFinal = attack;
+        final ISkill skillFinal = skill;
+        final MapleStatEffect effectFinal = effect;
+        final AttackType attackType = ShadowPartner != null ? AttackType.RANGED_WITH_SHADOWPARTNER : AttackType.RANGED;
+        final int attackCountFinal = bulletCount;
+        final double basedamageFinal = basedamage;
+        final int attackMapId = chr.getMapId();
+        final int damageDelay = computeRangedDamageDelay(attack);
+        if (damageDelay > 0) {
+            MapTimer.getInstance().schedule(new Runnable() {
+
+                @Override
+                public void run() {
+                    if (!chr.isAlive() || chr.getMapId() != attackMapId) {
+                        return;
+                    }
+                    DamageParse.applyAttack(attackFinal, skillFinal, chr, attackCountFinal, basedamageFinal, effectFinal, attackType);
+                }
+            }, damageDelay);
+        } else {
+            DamageParse.applyAttack(attackFinal, skillFinal, chr, attackCountFinal, basedamageFinal, effectFinal, attackType);
+        }
 
         // クローン : 攻撃
         if (chr.isCloning()) {
@@ -700,6 +732,52 @@ public class PlayerHandler {
             attack_clone.CharacterId = chr_clone.getId();
             chr.getMap().broadcastMessageClone(chr_clone, ResCUserRemote.UserAttack(attack_clone));
         }
+    }
+
+    private static IItem resolveProjectileForEquippedWeapon(final MapleCharacter chr) {
+        final IItem weapon = chr.getInventory(MapleInventoryType.EQUIPPED).getItem((short) -11);
+        if (weapon == null) {
+            return null;
+        }
+
+        final MapleWeaponType weaponType = GameConstants.getWeaponType(weapon.getItemId());
+        final MapleInventory useInventory = chr.getInventory(MapleInventoryType.USE);
+        for (short slot = 1; slot <= useInventory.getSlotLimit(); slot++) {
+            final IItem item = useInventory.getItem(slot);
+            if (item == null || item.getQuantity() <= 0) {
+                continue;
+            }
+            if (isProjectileForWeapon(weaponType, item.getItemId())) {
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private static boolean isProjectileForWeapon(final MapleWeaponType weaponType, final int itemId) {
+        switch (weaponType) {
+            case CLAW:
+                return GameConstants.isThrowingStar(itemId);
+            case GUN:
+                return GameConstants.isBullet(itemId);
+            case BOW:
+                return GameConstants.isArrowForBow(itemId);
+            case CROSSBOW:
+                return GameConstants.isArrowForCrossBow(itemId);
+            default:
+                return false;
+        }
+    }
+
+    private static int computeRangedDamageDelay(final AttackInfo attack) {
+        int delay = Math.max(attack.nHitDelay, 0);
+        if (delay <= 0) {
+            return 0;
+        }
+        // Resolve slightly ahead of the raw client delay so the death packet can catch up
+        // before the next local ranged animation continues into a dead target.
+        delay = Math.max(0, delay - 120);
+        return Math.min(delay, 700);
     }
 
     public static final void MagicDamage(MapleClient c, AttackInfo attack) {

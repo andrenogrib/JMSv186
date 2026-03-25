@@ -69,6 +69,12 @@ Observed behavior:
 - ranged attack works again
 - mob dies before the visual projectile appears to connect
 
+Current state:
+
+- partially improved in the current BMS code
+- pickup-side packet fixes are already working
+- ranged timing still needs one more sync pass because delayed shots can still feel late in some cases
+
 Relevant current area:
 
 - `src/odin/handling/channel/handler/PlayerHandler.java`
@@ -84,6 +90,7 @@ Practical conclusion:
 
 - fix surgically using packet traces and code traces
 - do not replace combat logic wholesale with `OpenMS` or `Cosmic`
+- see `../issues/bms_v24_combat_drop_followup.md` for the current follow-up state
 
 ## 3. Drops feel too generous
 
@@ -104,6 +111,15 @@ Current findings:
   - drop buff
   - showdown modifier
 - meso drops also multiply meso and drop modifiers
+
+Current state:
+
+- the BMS-specific server formula has already been reduced
+- live gameplay validation is still pending
+
+Follow-up note:
+
+- see `../issues/bms_v24_combat_drop_followup.md`
 
 Interpretation:
 

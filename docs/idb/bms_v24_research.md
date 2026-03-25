@@ -42,11 +42,11 @@ These names are a strong base for:
 
 Generated extracts live in:
 
-- `idb_client/docs/generated/BMS_v24.0_U_DEVM_names.md`
-- `idb_client/docs/generated/BMS_v24.0_U_DEVM_dispatch.md`
-- `idb_client/docs/generated/BMS_WvsGame_focus.md`
-- `idb_client/docs/generated/BMS_WvsGame_user_packet_switch.md`
-- `idb_client/docs/generated/BMS_WvsLogin_focus.md`
+- `generated/BMS_v24.0_U_DEVM_names.md`
+- `generated/BMS_v24.0_U_DEVM_dispatch.md`
+- `generated/BMS_WvsGame_focus.md`
+- `generated/BMS_WvsGame_user_packet_switch.md`
+- `generated/BMS_WvsLogin_focus.md`
 
 ## What Each IDB Is Good For
 
@@ -77,6 +77,25 @@ From the decoded `CUser::OnPacket` switch:
 
 This does not yet prove the Java server should use those exact names, but it is strong evidence for the intended behavior in the original server line.
 
+## Resolved: NPC Flicker While Moving
+
+The Henesys NPC flicker issue was traced to movement decoding, not to NPC scripts or missing NPC data.
+
+Confirmed behavior:
+
+- repeated `@00C6` during movement meant the server was sending `LP_NpcLeaveField`
+- this only happened while the player moved near NPCs
+- the player position used for visibility checks was being decoded incorrectly for BMS v24
+
+The final fix was:
+
+- handle BMS move headers like the older pre-JMS180 branch in `ReqCUser::OnUserMove`
+- decode BMS move end-position offsets with the older layout in `ParseCMovePath`
+
+Detailed notes:
+
+- `../issues/bms_v24_movement_npc_notes.md`
+
 ## Client Field Packet Families
 
 The client-side `CField::OnPacket` routing in `BMS_v24.0_U_DEVM.idb` is useful for map, mob and NPC rendering issues.
@@ -94,6 +113,28 @@ Important ranges already visible in the client dispatch:
 - `0xD9` to `0xDC` routes into `CReactorPool::OnPacket`
 
 This is especially relevant for the "mobs are not visible" issue, because it shows that mob appearance on the client depends on the server sending the correct `MobPool` family packets, not only on the map data existing.
+
+## Resolved: Mob Packets Were Going Out As `@FFFF`
+
+The mob invisibility issue was traced to missing BMS v24 `ServerPacket` mappings for the `CMobPool` family.
+
+Confirmed behavior:
+
+- the Java server was building `CMobPool` packets through `ResCMobPool`
+- `BMS_v24_ServerPacket.properties` had no opcode values for the main `LP_Mob*` entries
+- missing packet properties fall back to `@FFFF`
+- client-side IDB routing already showed that mob packets belong in the `0xB3` to `0xC4` range
+
+The applied fix mapped the main BMS v24 mob packet family beginning at:
+
+- `LP_MobEnterField = @00B3`
+- `LP_MobLeaveField = @00B4`
+- `LP_MobChangeController = @00B5`
+- `LP_MobMove = @00B6`
+
+Detailed notes:
+
+- `../issues/bms_v24_mob_spawn_packets.md`
 
 ## Map And Mob Logic
 

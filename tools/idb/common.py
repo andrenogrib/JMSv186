@@ -10,7 +10,7 @@ import idb
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 IDB_ROOT = REPO_ROOT / "idb_client" / "idb"
-DOCS_ROOT = REPO_ROOT / "idb_client" / "docs"
+DOCS_ROOT = REPO_ROOT / "docs" / "idb"
 GENERATED_ROOT = DOCS_ROOT / "generated"
 
 DEFAULT_CLIENT_IDB = IDB_ROOT / "BMS_v24.0_U_DEVM.idb"

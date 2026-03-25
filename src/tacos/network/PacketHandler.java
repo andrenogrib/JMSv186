@@ -18,6 +18,8 @@
  */
 package tacos.network;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.concurrent.ThreadPoolExecutor;
 import odin.client.MapleCharacter;
 import odin.client.MapleClient;
@@ -36,6 +38,7 @@ import odin.server.Randomizer;
 import odin.tools.FileoutputUtil;
 import org.apache.mina.common.ExecutorThreadModel;
 import tacos.packet.ClientPacketHeader;
+import tacos.packet.ServerPacketHeader;
 import tacos.server.TacosLogin;
 import tacos.server.TacosServer;
 import tacos.server.TacosServerType;
@@ -46,6 +49,8 @@ import tacos.server.TacosServerType;
  */
 public class PacketHandler extends IoHandlerAdapter {
 
+    private static final String LAST_SERVER_PACKETS_KEY = "debug.lastServerPackets";
+    private static final int LAST_SERVER_PACKETS_MAX = 20;
     private static SocketAcceptorConfig cfg = null;
     private static MapleCodecFactory mcf = null;
     private static ProtocolCodecFilter pcf = null;
@@ -112,15 +117,92 @@ public class PacketHandler extends IoHandlerAdapter {
         DebugLogger.NetworkLog("[Server_" + this.server_name + "][" + client_ip + "]" + " " + text);
     }
 
+    @SuppressWarnings("unchecked")
+    private Deque<String> getLastServerPackets(IoSession session) {
+        Deque<String> packets = (Deque<String>) session.getAttribute(LAST_SERVER_PACKETS_KEY);
+        if (packets == null) {
+            packets = new ArrayDeque<>();
+            session.setAttribute(LAST_SERVER_PACKETS_KEY, packets);
+        }
+        return packets;
+    }
+
+    private void rememberServerPacket(IoSession session, Object message) {
+        if (!(message instanceof MaplePacket)) {
+            return;
+        }
+        try {
+            String packet = (new ClientPacket(((MaplePacket) message).getBytes())).getString();
+            Deque<String> packets = getLastServerPackets(session);
+            while (packets.size() >= LAST_SERVER_PACKETS_MAX) {
+                packets.removeFirst();
+            }
+            packets.addLast(packet);
+        } catch (Exception ignore) {
+        }
+    }
+
+    private void dumpLastServerPackets(IoSession session, String reason) {
+        if (this.server.getType() == TacosServerType.LOGIN_SERVER) {
+            return;
+        }
+        MapleClient client = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
+        if (client == null || client.getPlayer() == null) {
+            return;
+        }
+        Deque<String> packets = getLastServerPackets(session);
+        if (packets.isEmpty()) {
+            return;
+        }
+        DebugLogger.ErrorLog("[LastSP][" + this.server_name + "][" + reason + "] begin");
+        for (String packet : packets) {
+            DebugLogger.ErrorLog("[LastSP] " + packet);
+        }
+        DebugLogger.ErrorLog("[LastSP][" + this.server_name + "][" + reason + "] end");
+    }
+
+    private String findServerPacketHeaderName(byte[] packet) {
+        if (packet == null || packet.length == 0) {
+            return "EMPTY";
+        }
+
+        int header_value;
+        if (packet.length >= 2) {
+            header_value = ((packet[0] & 0xFF) | ((packet[1] & 0xFF) << 8));
+        } else {
+            header_value = (packet[0] & 0xFF);
+        }
+
+        for (ServerPacketHeader sph : ServerPacketHeader.values()) {
+            if (sph.get() == header_value) {
+                return sph.name();
+            }
+        }
+
+        return String.format("UNKNOWN_%04X", header_value);
+    }
+
+    private void traceServerPacket(IoSession session, Object message) {
+        if (!(message instanceof MaplePacket)) {
+            return;
+        }
+
+        try {
+            byte[] packet = ((MaplePacket) message).getBytes();
+            String packet_text = (new ClientPacket(packet)).getString();
+            String header_name = findServerPacketHeaderName(packet);
+            DebugLogger.PacketSendLog(this.server_name, header_name, packet_text);
+        } catch (Exception ignore) {
+        }
+    }
+
     @Override
     public void sessionCreated(IoSession session) throws Exception {
-        log(session, "sessionCreated.");
         super.sessionCreated(session);
     }
 
     @Override
     public void sessionOpened(final IoSession session) throws Exception {
-        log(session, "sessionOpened.");
         if (this.server.isShutdown()) {
             session.close();
             return;
@@ -149,6 +231,7 @@ public class PacketHandler extends IoHandlerAdapter {
     @Override
     public void sessionClosed(final IoSession session) throws Exception {
         log(session, "sessionClosed.");
+        dumpLastServerPackets(session, "sessionClosed");
         MapleClient client = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
 
         if (client != null) {
@@ -173,7 +256,6 @@ public class PacketHandler extends IoHandlerAdapter {
 
     @Override
     public void sessionIdle(final IoSession session, final IdleStatus status) throws Exception {
-        log(session, "sessionIdle.");
         final MapleClient client = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
 
         if (client != null) {
@@ -187,12 +269,12 @@ public class PacketHandler extends IoHandlerAdapter {
     @Override
     public void exceptionCaught(IoSession session, Throwable cause) throws Exception {
         log(session, "exceptionCaught.");
+        dumpLastServerPackets(session, "exceptionCaught");
         super.exceptionCaught(session, cause);
     }
 
     @Override
     public void messageReceived(final IoSession session, final Object message) {
-        log(session, "messageReceived.");
         try {
             ClientPacket cp = new ClientPacket((byte[]) message);
             if (!cp.check()) {
@@ -203,6 +285,7 @@ public class PacketHandler extends IoHandlerAdapter {
             // client
             MapleClient client = (MapleClient) session.getAttribute(MapleClient.CLIENT_KEY);
             ClientPacketHeader header = cp.DecodeHeader();
+            DebugLogger.PacketRecvLog(this.server_name, header.name(), cp.getString());
             if (!((IPacketHandler) this).OnPacket(client, header, cp)) {
                 DebugLogger.CPLog(cp);
             }
@@ -215,8 +298,8 @@ public class PacketHandler extends IoHandlerAdapter {
 
     @Override
     public void messageSent(final IoSession session, final Object message) throws Exception {
-        log(session, "messageSent.");
-        //log(session, (new ClientPacket(((MaplePacket) message).getBytes())).get()); // server packet
+        rememberServerPacket(session, message);
+        traceServerPacket(session, message);
         super.messageSent(session, message);
     }
 }

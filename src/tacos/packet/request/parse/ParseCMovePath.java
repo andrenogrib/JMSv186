@@ -122,8 +122,10 @@ public class ParseCMovePath {
         int offset_end_action = 0;
         final int tail_data_size = getTailDataSize(cp); // for only mob.
 
-        if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 165) || Version.LessOrEqual(Region.GMS, 83)) {
-            // JMS131-165
+        if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 165) || Version.LessOrEqual(Region.GMS, 83) || Region.IsBMS()) {
+            // BMS v24 is still using the older pre-JMS180 end-position layout.
+            // This was confirmed indirectly from NPC visibility: bad move decode caused the
+            // server to spam LP_NpcLeaveField while the player was still standing near NPCs.
             offset_end_x = data.length - 13 - tail_data_size;
             offset_end_fh = data.length - 5 - tail_data_size;
         } else {

@@ -3,7 +3,7 @@
 This note compares the current Java packet mapping against the original BMS packet intent recovered from:
 
 - `idb_client/idb/BMS_srv/BMS_WvsGame.idb`
-- `idb_client/docs/generated/BMS_WvsGame_user_packet_switch.md`
+- `../idb/generated/BMS_WvsGame_user_packet_switch.md`
 
 Scope of this diff:
 

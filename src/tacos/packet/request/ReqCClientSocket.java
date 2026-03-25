@@ -37,6 +37,7 @@ import odin.handling.world.guild.MapleGuild;
 import java.util.List;
 import odin.server.MTSStorage;
 import tacos.packet.ClientPacket;
+import tacos.packet.ServerPacketHeader;
 import tacos.packet.response.ResCClientSocket;
 import tacos.packet.response.ResCFuncKeyMappedMan;
 import tacos.packet.response.ResCUser_Pet;
@@ -55,6 +56,10 @@ import tacos.server.TacosWorld;
  * @author Riremito
  */
 public class ReqCClientSocket {
+
+    private static boolean hasServerPacket(ServerPacketHeader header) {
+        return 0 <= header.get() && header.get() != 0xFFFF;
+    }
 
     // CClientSocket::ProcessPacket
     public static boolean OnPacket_Login(MapleClient client, ClientPacketHeader header, ClientPacket cp) {
@@ -287,7 +292,9 @@ public class ReqCClientSocket {
                 }
                 // keyboard
                 chr.SendPacket(ResCFuncKeyMappedMan.FuncKeyMappedInit(chr, false));
-                chr.SendPacket(ResCFuncKeyMappedMan.getMacros(chr));
+                if (hasServerPacket(ServerPacketHeader.LP_MacroSysDataInit)) {
+                    chr.SendPacket(ResCFuncKeyMappedMan.getMacros(chr));
+                }
                 // quest
                 for (MapleQuestStatus status : chr.getStartedQuests()) {
                     if (status.hasMobKills()) {
@@ -297,9 +304,11 @@ public class ReqCClientSocket {
                 // group
                 chr.updatePartyMemberHP();
                 // friend
-                chr.SendPacket(ResWrapper.updateBuddylist(chr));
+                if (hasServerPacket(ServerPacketHeader.LP_FriendResult)) {
+                    chr.SendPacket(ResWrapper.updateBuddylist(chr));
+                }
                 // guild
-                if (0 < chr.getGuildId()) {
+                if (0 < chr.getGuildId() && hasServerPacket(ServerPacketHeader.LP_GuildResult)) {
                     chr.SendPacket(ResCWvsContext.showGuildInfo(chr));
                     List<MaplePacket> packetList = OdinWorld.Alliance.getAllianceInfo(gs.getAllianceId(), true);
                     if (packetList != null) {
@@ -311,8 +320,12 @@ public class ReqCClientSocket {
                     }
                 }
                 // family
-                chr.SendPacket(ResCWvsContext.getFamilyData());
-                chr.SendPacket(ResCWvsContext.getFamilyInfo(chr));
+                if (hasServerPacket(ServerPacketHeader.LP_FamilyPrivilegeList)) {
+                    chr.SendPacket(ResCWvsContext.getFamilyData());
+                }
+                if (hasServerPacket(ServerPacketHeader.LP_FamilyInfoResult)) {
+                    chr.SendPacket(ResCWvsContext.getFamilyInfo(chr));
+                }
                 chr.sendStatChanged(true); // this gives you crash, if you did not send pet spawn packet in JMS131.
                 //chr.showNote();
                 chr.baseSkills(); // ?_?
@@ -328,7 +341,9 @@ public class ReqCClientSocket {
                     chr.SendPacket(ResCClientSocket.AuthenCodeChanged());
                 }
                 // 上部スライドメッセージ
-                chr.SendPacket(ResWrapper.BroadCastMsgSlide(chr.getChannelServer().getServerMessage()));
+                if (hasServerPacket(ServerPacketHeader.LP_BroadcastMsg)) {
+                    chr.SendPacket(ResWrapper.BroadCastMsgSlide(chr.getChannelServer().getServerMessage()));
+                }
                 // [other players]
                 // your pet
                 // [entering map]

@@ -1,5 +1,10 @@
 # RirePE Local Notes
 
+See also:
+
+- `tools/README.md`
+- `docs/tools/README.md`
+
 ## What is in this project
 
 - `tools/RirePE`

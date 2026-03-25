@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import odin.client.inventory.MapleInventoryType;
+import tacos.config.Region;
 import tacos.database.DatabaseConnection;
 
 public class MapleMonsterInformationProvider {
@@ -58,7 +59,7 @@ public class MapleMonsterInformationProvider {
             while (rs.next()) {
                 itemid = rs.getInt("itemid");
                 chance = rs.getInt("chance");
-                if (GameConstants.getInventoryType(itemid) == MapleInventoryType.EQUIP) {
+                if ((Region.IsGMS() || Region.IsMSEA()) && GameConstants.getInventoryType(itemid) == MapleInventoryType.EQUIP) {
                     chance *= 10; //in GMS/SEA it was raised
                 }
                 ret.add(new MonsterDropEntry(

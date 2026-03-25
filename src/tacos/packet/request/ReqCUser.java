@@ -889,6 +889,7 @@ public class ReqCUser {
     // BMS CUser::OnAttack
     public static final AttackInfo OnAttack(ClientPacket cp, ClientPacketHeader header, MapleCharacter chr) {
         final AttackInfo attack = new AttackInfo();
+        final boolean isBmsAttack = Region.IsBMS();
 
         // attack type
         attack.AttackHeader = header;
@@ -907,7 +908,7 @@ public class ReqCUser {
         // DR_Check
         if (Version.Equal(Region.KMST, 330) || Version.LessOrEqual(Region.KMS, 114)) {
             // ?
-        } else if (ServerConfig.JMS180orLater()) {
+        } else if (ServerConfig.JMS180orLater() || isBmsAttack) {
             cp.Decode4(); // pDrInfo.dr0
             cp.Decode4(); // pDrInfo.dr1
         }
@@ -917,7 +918,7 @@ public class ReqCUser {
         // DR_Check
         if (Version.Equal(Region.KMST, 330) || Version.LessOrEqual(Region.KMS, 114)) {
             // ?
-        } else if (ServerConfig.JMS180orLater()) {
+        } else if (ServerConfig.JMS180orLater() || isBmsAttack) {
             cp.Decode4(); // pDrInfo.dr2
             cp.Decode4(); // pDrInfo.dr3
         }
@@ -936,7 +937,7 @@ public class ReqCUser {
         }
         if (Version.Equal(Region.KMST, 330) || Version.LessOrEqual(Region.KMS, 114)) {
             // ?
-        } else if (ServerConfig.JMS180orLater()) {
+        } else if (ServerConfig.JMS180orLater() || isBmsAttack) {
             cp.Decode4(); // get_rand of DR_Check
             cp.Decode4(); // Crc32 of DR_Check
             // v95 4 bytes SKILLLEVELDATA::GetCrc
@@ -960,7 +961,7 @@ public class ReqCUser {
 
         if (Version.LessOrEqual(Region.KMS, 95) || Version.GreaterOrEqual(Region.GMS, 95)) {
             // ?
-        } else if (ServerConfig.JMS164orLater()) {
+        } else if (ServerConfig.JMS164orLater() || isBmsAttack) {
             cp.Decode4(); // Crc
         }
 
@@ -977,7 +978,7 @@ public class ReqCUser {
 
         attack.BuffKey = cp.Decode1();
 
-        if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 165)) {
+        if (Version.LessOrEqual(Region.KMS, 65) || Version.LessOrEqual(Region.JMS, 165) || isBmsAttack) {
             attack.AttackActionKey = cp.Decode1();
         } else {
             attack.AttackActionKey = cp.Decode2(); // nAttackAction & 0x7FFF | (bLeft << 15)
@@ -992,24 +993,33 @@ public class ReqCUser {
         attack.nAttackSpeed = cp.Decode1();
         attack.tAttackTime = Version.LessOrEqual(Region.KMS, 1) ? 0 : cp.Decode4();
 
-        if (Version.GreaterOrEqual(Region.KMS, 95) || ServerConfig.JMS186orLater()) {
+        final boolean hasBmsRangedPrelude = isBmsAttack && attack.AttackHeader == ClientPacketHeader.CP_UserShootAttack;
+        if (Version.GreaterOrEqual(Region.KMS, 95) || ServerConfig.JMS186orLater() || hasBmsRangedPrelude) {
             cp.Decode4(); // dwID
         }
 
         if (attack.AttackHeader == ClientPacketHeader.CP_UserShootAttack) {
-            attack.ProperBulletPosition = cp.Decode2();
-            attack.pnCashItemPos = cp.Decode2();
-            attack.nShootRange0a = cp.Decode1(); // nShootRange0a, GetShootRange0 func, is AOE or not, TT/ Avenger = 41, Showdown = 0
+            if (isBmsAttack) {
+                attack.ProperBulletPosition = 0;
+                attack.pnCashItemPos = 0;
+                // BMS sends the shoot-range marker here (for example Triple Throw = 0x41),
+                // not the USE inventory slot for the projectile.
+                attack.nShootRange0a = cp.Decode1() & 0xFF;
+            } else {
+                attack.ProperBulletPosition = cp.Decode2();
+                attack.pnCashItemPos = cp.Decode2();
+                attack.nShootRange0a = cp.Decode1(); // nShootRange0a, GetShootRange0 func, is AOE or not, TT/ Avenger = 41, Showdown = 0
 
-            if (0 < attack.nShootRange0a && !attack.IsShadowMeso() && chr.getBuffedValue(MapleBuffStat.SOULARROW) == null) {
-                IItem BulletItem;
-                if (0 < attack.pnCashItemPos) {
-                    BulletItem = chr.getInventory(MapleInventoryType.CASH).getItem(attack.pnCashItemPos);
-                } else {
-                    BulletItem = chr.getInventory(MapleInventoryType.USE).getItem(attack.ProperBulletPosition);
-                }
-                if (BulletItem != null) {
-                    attack.nBulletItemID = BulletItem.getItemId();
+                if (0 < attack.nShootRange0a && !attack.IsShadowMeso() && chr.getBuffedValue(MapleBuffStat.SOULARROW) == null) {
+                    IItem BulletItem;
+                    if (0 < attack.pnCashItemPos) {
+                        BulletItem = chr.getInventory(MapleInventoryType.CASH).getItem(attack.pnCashItemPos);
+                    } else {
+                        BulletItem = chr.getInventory(MapleInventoryType.USE).getItem(attack.ProperBulletPosition);
+                    }
+                    if (BulletItem != null) {
+                        attack.nBulletItemID = BulletItem.getItemId();
+                    }
                 }
             }
         }
@@ -1034,7 +1044,11 @@ public class ReqCUser {
             cp.Decode2(); // Mob Something
             cp.Decode2(); // Mob Something
             cp.Decode2(); // Mob Something
-            cp.Decode2(); // v366->tDelay
+            final int tDelay = cp.Decode2() & 0xFFFF; // v366->tDelay
+            // For ranged timing we care about the first impact point, not the slowest target.
+            if (tDelay > 0 && (attack.nHitDelay == 0 || tDelay < attack.nHitDelay)) {
+                attack.nHitDelay = tDelay;
+            }
 
             allDamageNumbers = new ArrayList<>();
 
@@ -1044,7 +1058,7 @@ public class ReqCUser {
                 allDamageNumbers.add(new OdinPair<>(Integer.valueOf(damage), false));
             }
 
-            if (Version.LessOrEqual(Region.KMS, 65) || Version.Equal(Region.THMS, 87)) {
+            if (Version.LessOrEqual(Region.KMS, 65) || Version.Equal(Region.THMS, 87) || isBmsAttack) {
                 // nothing
             } else if (ServerConfig.JMS164orLater()) {
                 cp.Decode4(); // CMob::GetCrc(v366->pMob)
@@ -1142,6 +1156,11 @@ public class ReqCUser {
             return false;
         }
 
+        // BMS v24 shares later content with this codebase, but its user movement header layout
+        // still behaves closer to the older pre-JMS180 branch. If we parse it as full JMS186+,
+        // the server-side position drifts and nearby NPCs start flickering from visibility updates.
+        final boolean isBmsMove = Region.IsBMS();
+
         // not in TWMS148, CMS104, but in TWMS125
         if (Version.GreaterOrEqual(Region.JMS, 186) || Version.Between(Region.TWMS, 121, 125) || Version.Between(Region.CMS, 85, 88) || Version.GreaterOrEqual(Region.GMS, 95)) {
             cp.Decode4(); // -1
@@ -1161,8 +1180,8 @@ public class ReqCUser {
         if (Version.LessOrEqual(Region.KMS, 65)) {
             // nothing
         } else {
-            // not in JMS147
-            if (ServerConfig.JMS164orLater()) {
+            // BMS v24 behaves closer to the older pre-JMS180 move layout here.
+            if (ServerConfig.JMS164orLater() || isBmsMove) {
                 cp.Decode4();
             }
         }

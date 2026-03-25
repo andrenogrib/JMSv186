@@ -117,6 +117,7 @@ public class ReqCMobPool {
 
     // MoveMonster
     public static boolean OnMove(ClientPacket cp, MapleCharacter chr, MapleMonster monster) {
+        final boolean isBmsMobMove = Region.IsBMS();
         byte unk1 = Version.GreaterOrEqual(Region.JMS, 302) ? cp.Decode1() : 0;
         short moveid = cp.Decode2();
         boolean bNextAttackPossible = cp.Decode1() > 0;
@@ -137,7 +138,16 @@ public class ReqCMobPool {
         byte unk2 = Version.LessOrEqual(Region.KMS, 31) ? 0 : cp.Decode1(); // 0
         int unk3 = Version.LessOrEqual(Region.KMS, 43) ? 1 : cp.Decode4(); // 1
 
-        if (Version.GreaterOrEqual(Region.KMS, 95) || ServerConfig.JMS186orLater()) {
+        if (isBmsMobMove) {
+            // BMS v24 keeps the older prelude but still inserts the two 0x00FFDDCC markers
+            // before the actual CMovePath buffer.
+            int ffddcc_1 = cp.Decode4();
+            int ffddcc_2 = cp.Decode4();
+
+            if (ffddcc_1 != 0x00FFDDCC || ffddcc_2 != 0x00FFDDCC) {
+                DebugLogger.DebugLog("BMS MobMove 0x00FFDDCC... " + String.format("08X", ffddcc_1) + " | " + String.format("08X", ffddcc_2));
+            }
+        } else if (Version.GreaterOrEqual(Region.KMS, 95) || ServerConfig.JMS186orLater()) {
             int ffddcc_1 = cp.Decode4(); // 0x00FFDDCC
             int ffddcc_2 = cp.Decode4(); // 0x00FFDDCC
             cp.Decode4();

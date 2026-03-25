@@ -71,6 +71,6 @@ start "" "%CLIENT_EXE%"
 echo.
 echo [NOTE] This launcher opens the built RirePE UI and the client.
 echo [NOTE] Packet.dll is now available from the local RirePE x86 build.
-echo [NOTE] See tools\README_RirePE.md for the local build notes.
+echo [NOTE] See tools\README.md and docs\tools\README.md for the local build notes.
 echo.
 pause

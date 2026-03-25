@@ -35,6 +35,7 @@ import odin.server.life.MapleMonster;
 import odin.server.life.MapleMonsterInformationProvider;
 import odin.server.life.MonsterDropEntry;
 import odin.server.maps.MapleMap;
+import tacos.config.Region;
 
 /**
  *
@@ -53,6 +54,7 @@ public class MonsterDrop {
         byte drop_type = (byte) (monster.getStats().isExplosiveReward() ? 3 : monster.getStats().isFfaLoot() ? 2 : player.getParty() != null ? 1 : 0);
         int cmServerrate = player.getChannelServer().getMesoRate();
         int chServerrate = player.getChannelServer().getDropRate();
+        boolean isBms = Region.IsBMS();
 
         double showdown = 100.0;
         MonsterStatusEffect mse = monster.getBuff(MonsterStatus.SHOWDOWN);
@@ -64,7 +66,7 @@ public class MonsterDrop {
         List<MonsterDropEntry> dropEntry = mi.retrieveDrop(monster.getId());
         Collections.shuffle(dropEntry);
 
-        boolean forced_drop = monster.getStats().isBoss();
+        boolean forced_drop = monster.getStats().isBoss() && !isBms;
 
         int dropped_count = 0;
 
@@ -82,7 +84,12 @@ public class MonsterDrop {
             }
 
             // ボスは無条件でドロップ確定, 通常Mobはx/1000の確率でDBの値を参照してドロップする
-            if (forced_drop || (Math.floor(Math.random() * 1000) < (int) (de.chance * chServerrate * player.getDropMod() * (player.getStat().dropBuff / 100.0) * (showdown / 100.0)))) {
+            double dropChance = de.chance * chServerrate * player.getDropMod() * (player.getStat().dropBuff / 100.0) * (showdown / 100.0);
+            if (isBms && monster.getStats().isBoss()) {
+                dropChance *= 2.0;
+            }
+            int dropThreshold = (int) Math.min(Math.max(dropChance, 0.0), 1000.0);
+            if (forced_drop || (dropThreshold > 0 && Randomizer.nextInt(1000) < dropThreshold)) {
                 // メル
                 if (de.itemId == 0) {
                     int mesos = de.Minimum;
@@ -91,7 +98,11 @@ public class MonsterDrop {
                     }
 
                     if (mesos > 0) {
-                        map.spawnMobMesoDrop((int) (mesos * (player.getStat().mesoBuff / 100.0) * player.getDropMod() * cmServerrate), map.calcDropPos(getDropPosition(monster, drop_type, dropped_count), monster.getPosition()), monster, player, false, drop_type);
+                        double mesoRate = (player.getStat().mesoBuff / 100.0) * cmServerrate;
+                        if (!isBms) {
+                            mesoRate *= player.getDropMod();
+                        }
+                        map.spawnMobMesoDrop((int) (mesos * mesoRate), map.calcDropPos(getDropPosition(monster, drop_type, dropped_count), monster.getPosition()), monster, player, false, drop_type);
                         dropped_count++;
                     }
                 } else {

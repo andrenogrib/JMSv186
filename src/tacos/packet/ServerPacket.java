@@ -20,9 +20,13 @@ package tacos.packet;
 
 import tacos.config.CodePage;
 import tacos.config.Content;
+import tacos.debug.DebugLogger;
 import tacos.network.ByteArrayMaplePacket;
 import tacos.network.MaplePacket;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -30,11 +34,18 @@ import java.util.ArrayList;
  */
 public class ServerPacket {
 
+    private static final Set<String> LOGGED_UNRESOLVED_HEADERS = Collections.synchronizedSet(new HashSet<>());
     private ArrayList<Byte> packet = new ArrayList<>();
     private int encoded = 0;
 
     public ServerPacket(ServerPacketHeader header) {
         short header_value = (short) header.get();
+
+        if (header.get() < 0 || header.get() == 0xFFFF) {
+            if (LOGGED_UNRESOLVED_HEADERS.add(header.name())) {
+                DebugLogger.ErrorLog("Unresolved ServerPacketHeader = " + header.name());
+            }
+        }
 
         this.packet.add((byte) (header_value & 0xFF));
         this.encoded += 1;

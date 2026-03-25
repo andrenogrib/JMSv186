@@ -26,3 +26,10 @@
 /tools/GH_Injector/
 /tools/ExtremeInjector/
 /tools/RirePE_runtime/
+/tmp_compile_lib/
+/tmp_client_probe.log
+/tmp_client_probe.err
+/odin/
+/tacos/
+/backup/20260324_serverpacket_before_mob_sync/
+/backup/20260324_serverpacket_before_userpool_sync/

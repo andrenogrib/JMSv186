@@ -58,6 +58,7 @@ public class AttackInfo {
     public int nAttackActionType;
     public int nAttackSpeed;
     public int tAttackTime;
+    public int nHitDelay;
     public short ProperBulletPosition;
     public short pnCashItemPos;
     public int nShootRange0a;

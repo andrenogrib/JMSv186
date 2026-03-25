@@ -39,7 +39,9 @@ public class DebugLogger {
     // static
     private static String LOG_DIR = "log/";
     private static String LOG_FILE_NAME = "DevLog.txt";
+    private static String PACKET_TRACE_FILE_NAME = "PacketTrace.log";
     private static FileWriter fw = null;
+    private static FileWriter packet_fw = null;
 
     public static void init() {
         try {
@@ -51,6 +53,10 @@ public class DebugLogger {
             fw = new FileWriter(LOG_DIR + LOG_FILE_NAME, true);
             fw.write(("[" + getDateString() + "]" + " Server Reboot - " + Region.getRegion() + " " + Version.getVersion() + "." + Version.getSubVersion() + "\r\n"));
             fw.flush();
+
+            packet_fw = new FileWriter(LOG_DIR + PACKET_TRACE_FILE_NAME, true);
+            packet_fw.write(("[" + getDateString() + "]" + "[PACKET]" + " Server Reboot - " + Region.getRegion() + " " + Version.getVersion() + "." + Version.getSubVersion() + "\r\n"));
+            packet_fw.flush();
         } catch (FileNotFoundException ex) {
             ExceptionLog("DebugLogger - open");
         } catch (IOException ex) {
@@ -67,6 +73,15 @@ public class DebugLogger {
             }
         }
         fw = null;
+
+        if (packet_fw != null) {
+            try {
+                packet_fw.close();
+            } catch (IOException ex) {
+                ExceptionLog("DebugLogger - close packet");
+            }
+        }
+        packet_fw = null;
     }
 
     public static boolean DevLog(String text) {
@@ -145,6 +160,14 @@ public class DebugLogger {
         return true;
     }
 
+    public static boolean PacketRecvLog(String server_name, String header_name, String packet_text) {
+        return PacketLog("RECV", server_name, header_name, packet_text);
+    }
+
+    public static boolean PacketSendLog(String server_name, String header_name, String packet_text) {
+        return PacketLog("SEND", server_name, header_name, packet_text);
+    }
+
     public static boolean XmlLog(String log_text) {
         if (!DeveloperMode.DM_LOG_WZ.get()) {
             return false;
@@ -170,7 +193,42 @@ public class DebugLogger {
     }
 
     public static void CPLog(ClientPacket cp) {
-        Log("ClientPacket", cp.getHeader().name() + "\n" + cp.getString());
+        Log("ClientPacket", cp.getHeader().name() + " " + getPacketSummary(cp.getString()));
+    }
+
+    private static boolean PacketLog(String direction, String server_name, String header_name, String packet_text) {
+        if (!DeveloperMode.DM_LOG_NETWORK.get()) {
+            return false;
+        }
+
+        String text = "[" + direction + "][" + server_name + "][" + header_name + "] " + packet_text;
+        WritePacketTrace(text);
+        return true;
+    }
+
+    private static String getPacketSummary(String packet_text) {
+        if (packet_text == null || packet_text.isEmpty()) {
+            return "";
+        }
+
+        int split = packet_text.indexOf(' ');
+        if (split >= 0) {
+            return packet_text.substring(0, split);
+        }
+
+        return packet_text;
+    }
+
+    private static void WritePacketTrace(String log_text) {
+        if (packet_fw == null) {
+            return;
+        }
+        try {
+            packet_fw.write("[" + getDateString() + "]" + "[" + getThreadId() + "]" + "[PACKET] " + log_text + "\r\n");
+            packet_fw.flush();
+        } catch (IOException ex) {
+            ExceptionLog("DebugLogger - packet write");
+        }
     }
 
     private static void Log(String log_type, String log_text) {
